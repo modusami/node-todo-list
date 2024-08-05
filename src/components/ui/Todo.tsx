@@ -17,12 +17,11 @@ const Todo: React.FC<TodoComponentProps> = ({
 	deleteTodo,
 	edit,
 }) => {
+	const { setSelectedTodoId } = useTodoContext();
+
 	const [showPopup, setShowPopup] = useState(false);
-	const [editModeOn, setEditModeOn] = useState<boolean>(false);
-	const [editTitle, setEditTitle] = useState<string>(title);
 
 	const handleEdit = () => {
-		setEditModeOn(true);
 		setShowPopup(false);
 	};
 
@@ -33,7 +32,13 @@ const Todo: React.FC<TodoComponentProps> = ({
 
 	return (
 		<>
-			<div className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-sm dark:bg-[#303030]">
+			<div
+				className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-sm dark:bg-[#303030]"
+				onClick={(e) => {
+					e.stopPropagation();
+					setSelectedTodoId(id);
+				}}
+			>
 				<p className="mr-3 flex items-center justify-center">
 					<Circle
 						className={`w-[20px] h-[20px] cursor-pointer ${
@@ -42,38 +47,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 						onClick={() => toggleComplete(id)}
 					/>
 				</p>
-				<p className="text-sm flex-1" onClick={(e) => setEditModeOn(true)}>
-					{!editModeOn ? (
-						title
-					) : (
-						<form
-							action="#"
-							className="flex"
-							onSubmit={(e) => {
-								e.preventDefault();
-								edit(id, editTitle);
-								setEditModeOn(false);
-								setShowPopup(false);
-							}}
-						>
-							<input
-								type="text"
-								name="editedTitle"
-								id="editedTitle"
-								autoFocus
-								className={
-									"text-inherit flex-1 border-none ouline-none bg-inherit font-extralight " +
-									inter.className
-								}
-								value={editTitle}
-								onChange={(e) => setEditTitle(e.target.value)}
-							/>
-							<button type="submit">
-								<CheckIcon className="w-[20px] h-[20px]" />
-							</button>
-						</form>
-					)}
-				</p>
+				<p className="text-sm flex-1">{title}</p>
 				{/* <p className="text-sm mb-2">{notes}</p> */}
 
 				<p className="ml-3 flex justify-center items-center">
@@ -81,13 +55,19 @@ const Todo: React.FC<TodoComponentProps> = ({
 						className={`w-[20px] h-[20px] cursor-pointer ${
 							isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
 						}`}
-						onClick={() => toggleFavorite(id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							toggleFavorite(id);
+						}}
 					/>
 				</p>
 				<div className="flex justify-center items-center">
 					<MoreVertical
 						className="cursor-pointer"
-						onClick={() => setShowPopup(!showPopup)}
+						onClick={(e) => {
+							e.stopPropagation();
+							setShowPopup(!showPopup);
+						}}
 					/>
 				</div>
 				{showPopup && <TodoPopup onEdit={handleEdit} onDelete={handleDelete} />}

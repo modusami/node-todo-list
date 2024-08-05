@@ -30,6 +30,7 @@ const TodoContext = createContext<any>(null);
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
 	const [todos, setTodos] = useState<TodoProps[] | null>(fake_todos);
+	const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
 
 	const add = (title: string) => {
 		const newTodo: TodoProps = {
@@ -84,6 +85,8 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 				handleToggleComplete,
 				deleteTodo,
 				edit,
+				selectedTodoId,
+				setSelectedTodoId,
 			}}
 		>
 			{children}
