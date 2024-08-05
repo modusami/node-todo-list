@@ -1,4 +1,5 @@
 import TodoPage from "@/components/pages/TodoPage";
+import { TodoProvider } from "@/lib/contexts/TodoContext";
 import Image from "next/image";
 
 export default function Home() {
@@ -9,9 +10,11 @@ export default function Home() {
 				<h1>Todo List @React | @Node | @Postgres</h1>
 			</nav>
 			{/* todos */}
-			<div className="flex-grow flex flex-col w-full md:w-[70%] mx-auto">
-				<TodoPage />
-			</div>
+			<TodoProvider>
+				<div className="flex-grow flex flex-col w-full md:w-[70%] mx-auto">
+					<TodoPage />
+				</div>
+			</TodoProvider>
 
 			<footer className="mt-4">
 				<b>Michael-Andre Odusami</b>
