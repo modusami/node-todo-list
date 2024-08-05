@@ -17,18 +17,10 @@ const TodoPage = () => {
 		setSelectedTodoId,
 	} = useTodoContext();
 
-	// not rlly used for now
-	const regularTodos = useMemo(() => {
-		return todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : null;
-	}, [todos]);
-
-	const completedTodos = useMemo(() => {
-		return todos
-			? todos.filter(
-					(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
-			  )
-			: null;
-	}, [todos]);
+	const regularTodos = todos.filter((todo: TodoProps) => !todo.isCompleted);
+	const completedTodos = todos.filter(
+		(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
+	);
 
 	const [title, setTitle] = useState<string>("");
 	const currentSelectedTodo = useMemo(() => {
@@ -62,11 +54,7 @@ const TodoPage = () => {
 									<ArrowRight className="h-3 w-3" />
 								)}
 							</span>
-							<span>
-								{regularTodos &&
-									regularTodos.length > 0 &&
-									regularTodos.length + " items"}
-							</span>
+							<span>{regularTodos && regularTodos.length + " items"}</span>
 						</div>
 						<div className="space-y-1">
 							{todos &&
@@ -102,11 +90,7 @@ const TodoPage = () => {
 									<ArrowRight className="h-3 w-3" />
 								)}
 							</span>
-							<span>
-								{completedTodos &&
-									completedTodos.length > 0 &&
-									completedTodos.length + " items"}
-							</span>
+							<span>{completedTodos && completedTodos.length + " items"}</span>
 						</div>
 						<div className="space-y-1">
 							{todos &&
