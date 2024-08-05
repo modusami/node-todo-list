@@ -31,11 +31,11 @@ const TodoContext = createContext<any>(null);
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
 	const [todos, setTodos] = useState<TodoProps[] | null>(fake_todos);
 
-	const add = (title: string) => {
+	const add = (title: string, notes: string) => {
 		const newTodo: TodoProps = {
 			id: Date.now(),
 			title: title,
-			notes: "",
+			notes: notes,
 			isCompleted: false,
 			isFavorite: false,
 		};

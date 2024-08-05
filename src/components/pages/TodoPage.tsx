@@ -16,6 +16,7 @@ const TodoPage = () => {
 	}, [todos]);
 
 	const [title, setTitle] = useState<string>("");
+	const [notes, setNotes] = useState<string>("");
 
 	return (
 		<>
@@ -32,27 +33,46 @@ const TodoPage = () => {
 			<div className="mt-auto">
 				<div className="w-full h-[fit] relative">
 					<form
+						className="space-y-2"
 						action="#"
 						onSubmit={(e) => {
 							e.preventDefault();
-							add(title);
+							add(title, notes);
 							setTitle("");
+							setNotes("");
 						}}
 					>
 						<input
 							type="text"
-							name="new-todo"
-							id="new-todo"
+							name="newTitle"
+							id="newTitle"
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							className="w-full bg-inherit border-b border-b-gray-300 focus:border-b-2 focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-2 m-0 outline-none  placeholder:font-light"
 							placeholder="Enter a new todo here..."
 						/>
-					</form>
 
-					<p className="absolute p-2  right-0 top-1/2 transform -translate-y-1/2">
-						<ArrowRightCircleIcon />
-					</p>
+						<input
+							type="text"
+							name="newNotes"
+							id="newNotes"
+							value={notes}
+							onChange={(e) => setNotes(e.target.value)}
+							className="w-full bg-inherit border-b border-b-gray-300 focus:border-b-2 focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-2 m-0 outline-none  placeholder:font-light"
+							placeholder="Enter notes for your new todo..."
+						/>
+						<p className="absolute p-2 right-0 bottom-0">
+							<ArrowRightCircleIcon
+								className="cursor-pointer"
+								onClick={(e) => {
+									e.preventDefault();
+									add(title, notes);
+									setTitle("");
+									setNotes("");
+								}}
+							/>
+						</p>
+					</form>
 				</div>
 			</div>
 		</>
