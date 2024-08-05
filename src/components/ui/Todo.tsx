@@ -47,7 +47,13 @@ const Todo: React.FC<TodoComponentProps> = ({
 						onClick={() => toggleComplete(id)}
 					/>
 				</p>
-				<p className="text-sm flex-1">{title}</p>
+				<p
+					className={`text-sm flex-1 ${
+						isCompleted ? "line-through dark:text-[#959595]" : ""
+					}`}
+				>
+					{title}
+				</p>
 				{/* <p className="text-sm mb-2">{notes}</p> */}
 
 				<p className="ml-3 flex justify-center items-center">
