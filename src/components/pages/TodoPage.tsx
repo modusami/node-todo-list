@@ -3,8 +3,8 @@ import Todo from "../ui/Todo";
 
 const TodoPage = () => {
 	return (
-		<section className="">
-			<div className="space-y-3 h-[500px] overflow-y-scroll custom-scrollbar">
+		<>
+			<div className="flex-1 space-y-4 custom-scrollbar overflow-y-auto">
 				<Todo
 					id={0}
 					title={"First Todo"}
@@ -22,8 +22,7 @@ const TodoPage = () => {
 					isFavorite={true}
 				/>
 			</div>
-
-			<section>
+			<div className="mt-auto">
 				<div className="w-full h-[fit] relative">
 					<input
 						type="text"
@@ -36,8 +35,8 @@ const TodoPage = () => {
 						<ArrowRightCircleIcon />
 					</p>
 				</div>
-			</section>
-		</section>
+			</div>
+		</>
 	);
 };
 
