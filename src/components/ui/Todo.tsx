@@ -10,7 +10,7 @@ interface TodoProps {
 const Todo: React.FC<TodoProps> = ({ id, title, notes, isCompleted, isFavorite }) => {
 	return (
 		<>
-			<div className="relative flex flex-col items-start min-w-[400px] max-w-[600px] p-2 border dark:border-gray-300 border-black-300 rounded-md">
+			<div className="relative flex flex-col items-start  p-2 border dark:border-gray-300 border-black-300 rounded-md">
 				<p className="text-xl g:text-2xl mb-2.5">{title}</p>
 				<p className="text-sm md:text-md mb-5">{notes}</p>
 				<div className="flex space-x-4">
