@@ -21,7 +21,6 @@ const TodoPage = () => {
 	}, [todos]);
 
 	const [title, setTitle] = useState<string>("");
-	const [notes, setNotes] = useState<string>("");
 
 	const [showRegularTodos, setShowRegularTodos] = useState<boolean>(true);
 	const [showCompletedTodos, setShowCompletedTodos] = useState<boolean>(true);
@@ -29,69 +28,79 @@ const TodoPage = () => {
 	return (
 		<>
 			<div className="flex-1 space-y-4 custom-scrollbar overflow-y-auto">
-				<div
-					className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer"
-					onClick={(e) => {
-						e.stopPropagation();
-						setShowRegularTodos(!showRegularTodos);
-					}}
-				>
-					<h1>Todos</h1>
-					<span>
-						{showRegularTodos ? (
-							<ArrowDown className="h-3 w-3" />
-						) : (
-							<ArrowRight className="h-3 w-3" />
-						)}
-					</span>
-					<span>
-						{regularTodos && regularTodos.length > 0 && regularTodos.length + " items"}
-					</span>
+				<div>
+					<div
+						className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer mb-3 dark:bg-[#353535] p-2 rounded-sm"
+						onClick={(e) => {
+							e.stopPropagation();
+							setShowRegularTodos(!showRegularTodos);
+						}}
+					>
+						<h1>Todos</h1>
+						<span>
+							{showRegularTodos ? (
+								<ArrowDown className="h-3 w-3" />
+							) : (
+								<ArrowRight className="h-3 w-3" />
+							)}
+						</span>
+						<span>
+							{regularTodos &&
+								regularTodos.length > 0 &&
+								regularTodos.length + " items"}
+						</span>
+					</div>
+					<div className="space-y-1">
+						{regularTodos &&
+							showRegularTodos &&
+							regularTodos.map((todoObj: TodoProps) => (
+								<Todo
+									key={todoObj.id}
+									{...todoObj}
+									toggleFavorite={handleToggleFavorite}
+									toggleComplete={handleToggleComplete}
+									deleteTodo={deleteTodo}
+								/>
+							))}
+					</div>
 				</div>
-				{regularTodos &&
-					showRegularTodos &&
-					regularTodos.map((todoObj: TodoProps) => (
-						<Todo
-							key={todoObj.id}
-							{...todoObj}
-							toggleFavorite={handleToggleFavorite}
-							toggleComplete={handleToggleComplete}
-							deleteTodo={deleteTodo}
-						/>
-					))}
 
-				<div
-					className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer"
-					onClick={(e) => {
-						e.stopPropagation();
-						setShowCompletedTodos(!showCompletedTodos);
-					}}
-				>
-					<h1>Completed</h1>
-					<span>
-						{showCompletedTodos ? (
-							<ArrowDown className="h-3 w-3" />
-						) : (
-							<ArrowRight className="h-3 w-3" />
-						)}
-					</span>
-					<span>
+				<div>
+					<div
+						className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer mb-3 dark:bg-[#353535] p-2 rounded-sm"
+						onClick={(e) => {
+							e.stopPropagation();
+							setShowCompletedTodos(!showCompletedTodos);
+						}}
+					>
+						<h1>Completed</h1>
+						<span>
+							{showCompletedTodos ? (
+								<ArrowDown className="h-3 w-3" />
+							) : (
+								<ArrowRight className="h-3 w-3" />
+							)}
+						</span>
+						<span>
+							{completedTodos &&
+								completedTodos.length > 0 &&
+								completedTodos.length + " items"}
+						</span>
+					</div>
+					<div className="space-y-1">
 						{completedTodos &&
-							completedTodos.length > 0 &&
-							completedTodos.length + " items"}
-					</span>
+							showCompletedTodos &&
+							completedTodos.map((todoObj: TodoProps) => (
+								<Todo
+									key={todoObj.id}
+									{...todoObj}
+									toggleFavorite={handleToggleFavorite}
+									toggleComplete={handleToggleComplete}
+									deleteTodo={deleteTodo}
+								/>
+							))}
+					</div>
 				</div>
-				{completedTodos &&
-					showCompletedTodos &&
-					completedTodos.map((todoObj: TodoProps) => (
-						<Todo
-							key={todoObj.id}
-							{...todoObj}
-							toggleFavorite={handleToggleFavorite}
-							toggleComplete={handleToggleComplete}
-							deleteTodo={deleteTodo}
-						/>
-					))}
 			</div>
 
 			<div className="mt-auto">
@@ -101,9 +110,8 @@ const TodoPage = () => {
 						action="#"
 						onSubmit={(e) => {
 							e.preventDefault();
-							add(title, notes);
+							add(title);
 							setTitle("");
-							setNotes("");
 						}}
 					>
 						<input
@@ -116,23 +124,13 @@ const TodoPage = () => {
 							placeholder="Enter a new todo here..."
 						/>
 
-						<input
-							type="text"
-							name="newNotes"
-							id="newNotes"
-							value={notes}
-							onChange={(e) => setNotes(e.target.value)}
-							className="w-full bg-inherit border-b border-b-gray-300 focus:border-b-2 focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-2 m-0 outline-none  placeholder:font-light"
-							placeholder="Enter notes for your new todo..."
-						/>
 						<p className="absolute p-2 right-0 bottom-0">
 							<ArrowRightCircleIcon
 								className="cursor-pointer"
 								onClick={(e) => {
 									e.preventDefault();
-									add(title, notes);
+									add(title);
 									setTitle("");
-									setNotes("");
 								}}
 							/>
 						</p>

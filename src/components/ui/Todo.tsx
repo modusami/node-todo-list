@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
-import { Star, EllipsisIcon, CircleCheck, MoreVertical } from "lucide-react";
+import { Star, Circle, MoreVertical } from "lucide-react";
 import TodoPopup from "../pieces/TodoPopup";
 
 const Todo: React.FC<TodoComponentProps> = ({
@@ -29,11 +29,11 @@ const Todo: React.FC<TodoComponentProps> = ({
 
 	return (
 		<>
-			<div className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-md">
+			<div className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-sm dark:bg-[#303030]">
 				<p className="mr-3 flex items-center justify-center">
-					<CircleCheck
+					<Circle
 						className={`w-[20px] h-[20px] cursor-pointer ${
-							isCompleted ? "fill-green-400 text-black" : "bg-inherit"
+							isCompleted ? "fill-green-400 text-green-400 " : "bg-inherit"
 						}`}
 						onClick={() => toggleComplete(id)}
 					/>
