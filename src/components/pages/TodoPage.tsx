@@ -17,6 +17,7 @@ const TodoPage = () => {
 		setSelectedTodoId,
 	} = useTodoContext();
 
+	// not rlly used for now
 	const regularTodos = useMemo(() => {
 		return todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : null;
 	}, [todos]);
@@ -68,18 +69,20 @@ const TodoPage = () => {
 							</span>
 						</div>
 						<div className="space-y-1">
-							{regularTodos &&
+							{todos &&
 								showRegularTodos &&
-								regularTodos.map((todoObj: TodoProps) => (
-									<Todo
-										key={todoObj.id}
-										{...todoObj}
-										toggleFavorite={handleToggleFavorite}
-										toggleComplete={handleToggleComplete}
-										deleteTodo={deleteTodo}
-										edit={edit}
-									/>
-								))}
+								todos
+									.filter((todo: TodoProps) => !todo.isCompleted)
+									.map((todoObj: TodoProps) => (
+										<Todo
+											key={todoObj.id}
+											{...todoObj}
+											toggleFavorite={handleToggleFavorite}
+											toggleComplete={handleToggleComplete}
+											deleteTodo={deleteTodo}
+											edit={edit}
+										/>
+									))}
 						</div>
 					</div>
 
@@ -106,18 +109,24 @@ const TodoPage = () => {
 							</span>
 						</div>
 						<div className="space-y-1">
-							{completedTodos &&
+							{todos &&
 								showCompletedTodos &&
-								completedTodos.map((todoObj: TodoProps) => (
-									<Todo
-										key={todoObj.id}
-										{...todoObj}
-										toggleFavorite={handleToggleFavorite}
-										toggleComplete={handleToggleComplete}
-										deleteTodo={deleteTodo}
-										edit={edit}
-									/>
-								))}
+								todos
+									.filter(
+										(todo: TodoProps) =>
+											todo.isCompleted ||
+											(todo.isCompleted && todo.isFavorite)
+									)
+									.map((todoObj: TodoProps) => (
+										<Todo
+											key={todoObj.id}
+											{...todoObj}
+											toggleFavorite={handleToggleFavorite}
+											toggleComplete={handleToggleComplete}
+											deleteTodo={deleteTodo}
+											edit={edit}
+										/>
+									))}
 						</div>
 					</div>
 				</div>
