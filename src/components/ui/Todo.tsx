@@ -1,6 +1,9 @@
+"use client";
+import { useState } from "react";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
-import { Star, EllipsisIcon, CircleCheck } from "lucide-react";
+import { Star, EllipsisIcon, CircleCheck, MoreVertical } from "lucide-react";
+import TodoPopup from "../pieces/TodoPopup";
 
 const Todo: React.FC<TodoComponentProps> = ({
 	id,
@@ -9,32 +12,50 @@ const Todo: React.FC<TodoComponentProps> = ({
 	isCompleted,
 	isFavorite,
 	toggleFavorite,
+	toggleComplete,
+	deleteTodo,
 }) => {
+	const [showPopup, setShowPopup] = useState(false);
+
+	const handleEdit = () => {
+		// Implement edit functionality
+		setShowPopup(false);
+	};
+
+	const handleDelete = () => {
+		deleteTodo(id);
+		setShowPopup(false);
+	};
+
 	return (
 		<>
-			<div className="relative flex flex-col items-start  p-2 border dark:border-gray-300 border-black-300 rounded-md">
-				<p className="text-xl g:text-2xl mb-2.5">{title}</p>
-				<p className="text-sm md:text-md mb-5">{notes}</p>
-				<div className="flex space-x-4">
-					<p>
-						<CircleCheck
-							className={`w-[20px] h-[20px] cursor-pointer ${
-								isCompleted ? "fill-green-400 text-black" : "bg-inherit"
-							}`}
-						/>
-					</p>
-					<p>
-						<Star
-							className={`w-[20px] h-[20px] cursor-pointer ${
-								isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
-							}`}
-							onClick={() => toggleFavorite(id)}
-						/>
-					</p>
+			<div className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-md">
+				<p className="mr-3 flex items-center justify-center">
+					<CircleCheck
+						className={`w-[20px] h-[20px] cursor-pointer ${
+							isCompleted ? "fill-green-400 text-black" : "bg-inherit"
+						}`}
+						onClick={() => toggleComplete(id)}
+					/>
+				</p>
+				<p className="text-sm flex-1">{title}</p>
+				{/* <p className="text-sm mb-2">{notes}</p> */}
+
+				<p className="ml-3 flex justify-center items-center">
+					<Star
+						className={`w-[20px] h-[20px] cursor-pointer ${
+							isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
+						}`}
+						onClick={() => toggleFavorite(id)}
+					/>
+				</p>
+				<div className="flex justify-center items-center">
+					<MoreVertical
+						className="cursor-pointer"
+						onClick={() => setShowPopup(!showPopup)}
+					/>
 				</div>
-				<div className="absolute top-2 right-2">
-					<EllipsisIcon className="cursor-pointer" />
-				</div>
+				{showPopup && <TodoPopup onEdit={handleEdit} onDelete={handleDelete} />}
 			</div>
 		</>
 	);

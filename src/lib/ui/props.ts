@@ -8,4 +8,6 @@ export interface TodoProps {
 
 export interface TodoComponentProps extends TodoProps {
 	toggleFavorite: (id: number) => void;
+	toggleComplete: (id: number) => void;
+	deleteTodo: (id: number) => void;
 }

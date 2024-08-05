@@ -1,35 +1,99 @@
 "use client";
-import { ArrowRightCircleIcon } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowRightCircleIcon } from "lucide-react";
 import Todo from "../ui/Todo";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoProps } from "@/lib/ui/props";
 import { useState, useMemo } from "react";
 
 const TodoPage = () => {
-	const { todos, add, handleToggleFavorite } = useTodoContext();
-	const favoriteTodos = useMemo(() => {
-		return todos ? todos.filter((todo: TodoProps) => todo.isFavorite) : null;
-	}, [todos]);
+	const { todos, add, handleToggleFavorite, handleToggleComplete, deleteTodo } = useTodoContext();
 
 	const regularTodos = useMemo(() => {
-		return todos ? todos.filter((todo: TodoProps) => !todo.isFavorite) : null;
+		return todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : null;
+	}, [todos]);
+
+	const completedTodos = useMemo(() => {
+		return todos
+			? todos.filter(
+					(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
+			  )
+			: null;
 	}, [todos]);
 
 	const [title, setTitle] = useState<string>("");
 	const [notes, setNotes] = useState<string>("");
 
+	const [showRegularTodos, setShowRegularTodos] = useState<boolean>(true);
+	const [showCompletedTodos, setShowCompletedTodos] = useState<boolean>(true);
+
 	return (
 		<>
 			<div className="flex-1 space-y-4 custom-scrollbar overflow-y-auto">
-				{favoriteTodos &&
-					favoriteTodos.map((todoObj: TodoProps) => (
-						<Todo key={todoObj.id} {...todoObj} toggleFavorite={handleToggleFavorite} />
-					))}
+				<div
+					className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer"
+					onClick={(e) => {
+						e.stopPropagation();
+						setShowRegularTodos(!showRegularTodos);
+					}}
+				>
+					<h1>Todos</h1>
+					<span>
+						{showRegularTodos ? (
+							<ArrowDown className="h-3 w-3" />
+						) : (
+							<ArrowRight className="h-3 w-3" />
+						)}
+					</span>
+					<span>
+						{regularTodos && regularTodos.length > 0 && regularTodos.length + " items"}
+					</span>
+				</div>
 				{regularTodos &&
+					showRegularTodos &&
 					regularTodos.map((todoObj: TodoProps) => (
-						<Todo key={todoObj.id} {...todoObj} toggleFavorite={handleToggleFavorite} />
+						<Todo
+							key={todoObj.id}
+							{...todoObj}
+							toggleFavorite={handleToggleFavorite}
+							toggleComplete={handleToggleComplete}
+							deleteTodo={deleteTodo}
+						/>
+					))}
+
+				<div
+					className="flex uppercase text-xs w-fit justify-center items-center space-x-2 cursor-pointer"
+					onClick={(e) => {
+						e.stopPropagation();
+						setShowCompletedTodos(!showCompletedTodos);
+					}}
+				>
+					<h1>Completed</h1>
+					<span>
+						{showCompletedTodos ? (
+							<ArrowDown className="h-3 w-3" />
+						) : (
+							<ArrowRight className="h-3 w-3" />
+						)}
+					</span>
+					<span>
+						{completedTodos &&
+							completedTodos.length > 0 &&
+							completedTodos.length + " items"}
+					</span>
+				</div>
+				{completedTodos &&
+					showCompletedTodos &&
+					completedTodos.map((todoObj: TodoProps) => (
+						<Todo
+							key={todoObj.id}
+							{...todoObj}
+							toggleFavorite={handleToggleFavorite}
+							toggleComplete={handleToggleComplete}
+							deleteTodo={deleteTodo}
+						/>
 					))}
 			</div>
+
 			<div className="mt-auto">
 				<div className="w-full h-[fit] relative">
 					<form
