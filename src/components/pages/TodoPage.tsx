@@ -3,29 +3,31 @@ import { ArrowRightCircleIcon } from "lucide-react";
 import Todo from "../ui/Todo";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoProps } from "@/lib/ui/props";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const TodoPage = () => {
-	const { todos, add } = useTodoContext();
+	const { todos, add, handleToggleFavorite } = useTodoContext();
+	const favoriteTodos = useMemo(() => {
+		return todos ? todos.filter((todo: TodoProps) => todo.isFavorite) : null;
+	}, [todos]);
+
+	const regularTodos = useMemo(() => {
+		return todos ? todos.filter((todo: TodoProps) => !todo.isFavorite) : null;
+	}, [todos]);
+
 	const [title, setTitle] = useState<string>("");
 
 	return (
 		<>
 			<div className="flex-1 space-y-4 custom-scrollbar overflow-y-auto">
-				{todos &&
-					todos.map((todoObj: TodoProps) => {
-						return (
-							<>
-								<Todo
-									id={todoObj.id}
-									title={todoObj.title}
-									notes={todoObj.notes}
-									isCompleted={todoObj.isCompleted}
-									isFavorite={todoObj.isFavorite}
-								/>
-							</>
-						);
-					})}
+				{favoriteTodos &&
+					favoriteTodos.map((todoObj: TodoProps) => (
+						<Todo key={todoObj.id} {...todoObj} toggleFavorite={handleToggleFavorite} />
+					))}
+				{regularTodos &&
+					regularTodos.map((todoObj: TodoProps) => (
+						<Todo key={todoObj.id} {...todoObj} toggleFavorite={handleToggleFavorite} />
+					))}
 			</div>
 			<div className="mt-auto">
 				<div className="w-full h-[fit] relative">

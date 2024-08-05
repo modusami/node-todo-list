@@ -5,3 +5,7 @@ export interface TodoProps {
 	isCompleted: boolean;
 	isFavorite: boolean;
 }
+
+export interface TodoComponentProps extends TodoProps {
+	toggleFavorite: (id: number) => void;
+}

@@ -1,7 +1,15 @@
-import { TodoProps } from "@/lib/ui/props";
+import { useTodoContext } from "@/lib/contexts/TodoContext";
+import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
 import { Star, EllipsisIcon, CircleCheck } from "lucide-react";
 
-const Todo: React.FC<TodoProps> = ({ id, title, notes, isCompleted, isFavorite }) => {
+const Todo: React.FC<TodoComponentProps> = ({
+	id,
+	title,
+	notes,
+	isCompleted,
+	isFavorite,
+	toggleFavorite,
+}) => {
 	return (
 		<>
 			<div className="relative flex flex-col items-start  p-2 border dark:border-gray-300 border-black-300 rounded-md">
@@ -20,6 +28,7 @@ const Todo: React.FC<TodoProps> = ({ id, title, notes, isCompleted, isFavorite }
 							className={`w-[20px] h-[20px] cursor-pointer ${
 								isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
 							}`}
+							onClick={() => toggleFavorite(id)}
 						/>
 					</p>
 				</div>

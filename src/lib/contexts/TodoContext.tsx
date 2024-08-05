@@ -42,7 +42,21 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		setTodos((prevTodos) => (prevTodos ? [...prevTodos, newTodo] : [newTodo]));
 	};
 
-	return <TodoContext.Provider value={{ todos, setTodos, add }}>{children}</TodoContext.Provider>;
+	const handleToggleFavorite = (id: number) => {
+		setTodos((prevTodos) => {
+			return prevTodos
+				? prevTodos.map((todo) =>
+						todo.id == id ? { ...todo, isFavorite: !todo.isFavorite } : todo
+				  )
+				: null;
+		});
+	};
+
+	return (
+		<TodoContext.Provider value={{ todos, setTodos, add, handleToggleFavorite }}>
+			{children}
+		</TodoContext.Provider>
+	);
 };
 
 export const useTodoContext = () => useContext(TodoContext);
