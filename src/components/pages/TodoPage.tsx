@@ -1,8 +1,9 @@
+import { ArrowRightCircleIcon } from "lucide-react";
 import Todo from "../ui/Todo";
 
 const TodoPage = () => {
 	return (
-		<section className="mt-10 mb-5">
+		<section className="">
 			<div className="space-y-3 h-[500px] overflow-y-scroll custom-scrollbar">
 				<Todo
 					id={0}
@@ -20,58 +21,22 @@ const TodoPage = () => {
 					isCompleted={true}
 					isFavorite={true}
 				/>
-
-				<Todo
-					id={0}
-					title={"First Todo"}
-					notes={"This is my very own first todo"}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-				<Todo
-					id={1}
-					title={"Register For Virginia Tech Courses"}
-					notes={
-						"Need to take CS 2104 ASAP, but look for another tech based course I can potentially take at tech that is actually meaningful. No BS classes such as sociology and such."
-					}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-
-				<Todo
-					id={0}
-					title={"First Todo"}
-					notes={"This is my very own first todo"}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-				<Todo
-					id={1}
-					title={"Register For Virginia Tech Courses"}
-					notes={
-						"Need to take CS 2104 ASAP, but look for another tech based course I can potentially take at tech that is actually meaningful. No BS classes such as sociology and such."
-					}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-
-				<Todo
-					id={0}
-					title={"First Todo"}
-					notes={"This is my very own first todo"}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-				<Todo
-					id={1}
-					title={"Register For Virginia Tech Courses"}
-					notes={
-						"Need to take CS 2104 ASAP, but look for another tech based course I can potentially take at tech that is actually meaningful. No BS classes such as sociology and such."
-					}
-					isCompleted={true}
-					isFavorite={true}
-				/>
 			</div>
+
+			<section>
+				<div className="w-full h-[fit] relative">
+					<input
+						type="text"
+						name="new-todo"
+						id="new-todo"
+						className="w-full bg-inherit border-b border-b-gray-300 focus:border-b-2 focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-2 m-0 outline-none  placeholder:font-light"
+						placeholder="Enter a new todo here..."
+					/>
+					<p className="absolute p-2  right-0 top-1/2 transform -translate-y-1/2">
+						<ArrowRightCircleIcon />
+					</p>
+				</div>
+			</section>
 		</section>
 	);
 };
