@@ -6,7 +6,8 @@ import { TodoProps } from "@/lib/ui/props";
 import { useState, useMemo } from "react";
 
 const TodoPage = () => {
-	const { todos, add, handleToggleFavorite, handleToggleComplete, deleteTodo } = useTodoContext();
+	const { todos, add, handleToggleFavorite, handleToggleComplete, deleteTodo, edit } =
+		useTodoContext();
 
 	const regularTodos = useMemo(() => {
 		return todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : null;
@@ -60,6 +61,7 @@ const TodoPage = () => {
 									toggleFavorite={handleToggleFavorite}
 									toggleComplete={handleToggleComplete}
 									deleteTodo={deleteTodo}
+									edit={edit}
 								/>
 							))}
 					</div>
@@ -97,6 +99,7 @@ const TodoPage = () => {
 									toggleFavorite={handleToggleFavorite}
 									toggleComplete={handleToggleComplete}
 									deleteTodo={deleteTodo}
+									edit={edit}
 								/>
 							))}
 					</div>
@@ -109,9 +112,11 @@ const TodoPage = () => {
 						className="space-y-2"
 						action="#"
 						onSubmit={(e) => {
-							e.preventDefault();
-							add(title);
-							setTitle("");
+							if (title.length > 0) {
+								e.preventDefault();
+								add(title);
+								setTitle("");
+							}
 						}}
 					>
 						<input

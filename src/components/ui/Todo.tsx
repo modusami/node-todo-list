@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
-import { Star, Circle, MoreVertical } from "lucide-react";
+import { Star, Circle, MoreVertical, CheckIcon } from "lucide-react";
 import TodoPopup from "../pieces/TodoPopup";
+import { inter } from "@/lib/util/fonts";
 
 const Todo: React.FC<TodoComponentProps> = ({
 	id,
@@ -14,11 +15,14 @@ const Todo: React.FC<TodoComponentProps> = ({
 	toggleFavorite,
 	toggleComplete,
 	deleteTodo,
+	edit,
 }) => {
 	const [showPopup, setShowPopup] = useState(false);
+	const [editModeOn, setEditModeOn] = useState<boolean>(false);
+	const [editTitle, setEditTitle] = useState<string>(title);
 
 	const handleEdit = () => {
-		// Implement edit functionality
+		setEditModeOn(true);
 		setShowPopup(false);
 	};
 
@@ -38,7 +42,38 @@ const Todo: React.FC<TodoComponentProps> = ({
 						onClick={() => toggleComplete(id)}
 					/>
 				</p>
-				<p className="text-sm flex-1">{title}</p>
+				<p className="text-sm flex-1" onClick={(e) => setEditModeOn(true)}>
+					{!editModeOn ? (
+						title
+					) : (
+						<form
+							action="#"
+							className="flex"
+							onSubmit={(e) => {
+								e.preventDefault();
+								edit(id, editTitle);
+								setEditModeOn(false);
+								setShowPopup(false);
+							}}
+						>
+							<input
+								type="text"
+								name="editedTitle"
+								id="editedTitle"
+								autoFocus
+								className={
+									"text-inherit flex-1 border-none ouline-none bg-inherit font-extralight " +
+									inter.className
+								}
+								value={editTitle}
+								onChange={(e) => setEditTitle(e.target.value)}
+							/>
+							<button type="submit">
+								<CheckIcon className="w-[20px] h-[20px]" />
+							</button>
+						</form>
+					)}
+				</p>
 				{/* <p className="text-sm mb-2">{notes}</p> */}
 
 				<p className="ml-3 flex justify-center items-center">

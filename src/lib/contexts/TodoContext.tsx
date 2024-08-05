@@ -42,6 +42,14 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		setTodos((prevTodos) => (prevTodos ? [...prevTodos, newTodo] : [newTodo]));
 	};
 
+	const edit = (id: number, title: string) => {
+		setTodos((prevTodos) => {
+			return prevTodos
+				? prevTodos.map((todo) => (todo.id === id ? { ...todo, title: title } : todo))
+				: null;
+		});
+	};
+
 	const deleteTodo = (id: number) => {
 		setTodos(todos && todos.filter((todo) => todo.id !== id));
 	};
@@ -68,7 +76,15 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<TodoContext.Provider
-			value={{ todos, setTodos, add, handleToggleFavorite, handleToggleComplete, deleteTodo }}
+			value={{
+				todos,
+				setTodos,
+				add,
+				handleToggleFavorite,
+				handleToggleComplete,
+				deleteTodo,
+				edit,
+			}}
 		>
 			{children}
 		</TodoContext.Provider>
