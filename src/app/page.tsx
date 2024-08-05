@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export default function Home() {
 	return (
-		<main className="min-h-screen p-24 flex flex-col items-center">
+		<main className="min-h-screen p-2 md:p-24 flex flex-col items-center">
 			{/* nav bar / title */}
-			<nav>
+			<nav className="mb-2">
 				<h1>Todo List @React | @Node | @Postgres</h1>
 			</nav>
 			{/* todos */}
@@ -13,7 +13,7 @@ export default function Home() {
 				<TodoPage />
 			</div>
 
-			<footer>
+			<footer className="mt-2">
 				<b>Michael-Andre Odusami</b>
 			</footer>
 		</main>
