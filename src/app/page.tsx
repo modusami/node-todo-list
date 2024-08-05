@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export default function Home() {
 	return (
-		<main className="min-h-screen p-2 md:p-24 flex flex-col items-center">
+		<main className="min-h-screen p-2 flex flex-col">
 			{/* nav bar / title */}
 			<nav className="mb-2">
 				<h1>Todo List @React | @Node | @Postgres</h1>
 			</nav>
 			{/* todos */}
-			<div className="flex-1">
+			<div className="flex-grow flex flex-col w-full md:w-[70%] mx-auto">
 				<TodoPage />
 			</div>
 
