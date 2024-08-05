@@ -1,4 +1,4 @@
-import { Star, Circle, EllipsisIcon } from "lucide-react";
+import { Star, EllipsisIcon, CircleCheck } from "lucide-react";
 interface TodoProps {
 	id: number;
 	title: string;
@@ -15,16 +15,16 @@ const Todo: React.FC<TodoProps> = ({ id, title, notes, isCompleted, isFavorite }
 				<p className="text-sm md:text-md mb-5">{notes}</p>
 				<div className="flex space-x-4">
 					<p>
-						<Circle
-							className={`w-[20px] h-[20px] cursor-pointer${
-								isCompleted ? "bg-green-600" : "bg-inherit"
+						<CircleCheck
+							className={`w-[20px] h-[20px] cursor-pointer ${
+								isCompleted ? "fill-green-400 text-black" : "bg-inherit"
 							}`}
 						/>
 					</p>
 					<p>
 						<Star
 							className={`w-[20px] h-[20px] cursor-pointer ${
-								isFavorite ? "bg-yellow-500" : "bg-inherit"
+								isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
 							}`}
 						/>
 					</p>
