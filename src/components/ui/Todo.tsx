@@ -1,11 +1,5 @@
+import { TodoProps } from "@/lib/ui/props";
 import { Star, EllipsisIcon, CircleCheck } from "lucide-react";
-interface TodoProps {
-	id: number;
-	title: string;
-	notes: string;
-	isCompleted: boolean;
-	isFavorite: boolean;
-}
 
 const Todo: React.FC<TodoProps> = ({ id, title, notes, isCompleted, isFavorite }) => {
 	return (

@@ -1,26 +1,53 @@
+"use client";
 import { ArrowRightCircleIcon } from "lucide-react";
 import Todo from "../ui/Todo";
+import { TodoProps } from "@/lib/ui/props";
+import { useState } from "react";
+
+const fake_todos: TodoProps[] = [
+	{
+		id: 0,
+		title: "My First Todo",
+		notes: "This is my first todo ever made",
+		isCompleted: false,
+		isFavorite: false,
+	},
+	{
+		id: 1,
+		title: "Register For Virginia Tech Courses",
+		notes: "Need to take CS 2104 ASAP, but look for another tech based course I can potentially take at tech that is actually meaningful. No BS classes such as sociology and such.",
+		isCompleted: false,
+		isFavorite: true,
+	},
+	{
+		id: 3,
+		title: "Garbage Needs To Be Carried Out",
+		notes: "take it out at 10:00AM",
+		isCompleted: false,
+		isFavorite: true,
+	},
+];
 
 const TodoPage = () => {
+	const [todos, setTodos] = useState<TodoProps[] | null>(fake_todos);
+
 	return (
 		<>
 			<div className="flex-1 space-y-4 custom-scrollbar overflow-y-auto">
-				<Todo
-					id={0}
-					title={"First Todo"}
-					notes={"This is my very own first todo"}
-					isCompleted={true}
-					isFavorite={true}
-				/>
-				<Todo
-					id={1}
-					title={"Register For Virginia Tech Courses"}
-					notes={
-						"Need to take CS 2104 ASAP, but look for another tech based course I can potentially take at tech that is actually meaningful. No BS classes such as sociology and such."
-					}
-					isCompleted={true}
-					isFavorite={true}
-				/>
+				{todos &&
+					todos.map((todoObj) => {
+						return (
+							<>
+								<Todo
+									id={todoObj.id}
+									title={todoObj.title}
+									notes={todoObj.notes}
+									isCompleted={todoObj.isCompleted}
+									isFavorite={todoObj.isFavorite}
+								/>
+							</>
+						);
+					})}
 			</div>
 			<div className="mt-auto">
 				<div className="w-full h-[fit] relative">

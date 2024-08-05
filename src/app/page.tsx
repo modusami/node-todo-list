@@ -5,7 +5,7 @@ export default function Home() {
 	return (
 		<main className="min-h-screen p-2 flex flex-col">
 			{/* nav bar / title */}
-			<nav className="mb-2">
+			<nav className="mb-4">
 				<h1>Todo List @React | @Node | @Postgres</h1>
 			</nav>
 			{/* todos */}
@@ -13,7 +13,7 @@ export default function Home() {
 				<TodoPage />
 			</div>
 
-			<footer className="mt-2">
+			<footer className="mt-4">
 				<b>Michael-Andre Odusami</b>
 			</footer>
 		</main>
