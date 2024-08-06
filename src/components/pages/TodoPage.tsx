@@ -123,7 +123,7 @@ const TodoPage = () => {
 					</div>
 				</div>
 
-				<div className="mt-auto">
+				<div className="mt-auto mb-5">
 					<div className="w-full h-[fit] relative">
 						<form
 							className="space-y-2"
@@ -136,32 +136,34 @@ const TodoPage = () => {
 								}
 							}}
 						>
-							<input
-								type="text"
-								name="newTitle"
-								id="newTitle"
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
-								className="w-full bg-inherit border-b border-b-gray-300 focus:border-b-2 focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-2 m-0 outline-none  placeholder:font-light"
-								placeholder="Enter a new todo here..."
-							/>
-
-							<p className="absolute p-2 right-0 bottom-0">
-								<ArrowRightCircleIcon
-									className="cursor-pointer"
-									onClick={(e) => {
-										e.preventDefault();
-										add(title);
-										setTitle("");
-									}}
+							<div className="flex justify-center items-center bg-[#404040] ">
+								<input
+									type="text"
+									name="newTitle"
+									id="newTitle"
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
+									className="w-full flex-1 bg-inherit focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-3 m-0 outline-none  placeholder:font-light"
+									placeholder="Enter a new todo here..."
 								/>
-							</p>
+
+								<p className="w-[10%] flex justify-end pr-2 ">
+									<ArrowRightCircleIcon
+										className="cursor-pointer"
+										onClick={(e) => {
+											e.preventDefault();
+											add(title);
+											setTitle("");
+										}}
+									/>
+								</p>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 			{currentSelectedTodo && (
-				<div className="w-[30%] pt-8 px-4 min-h-full dark:bg-[#303030] bg-slate-100 p-2">
+				<div className="w-[30%] pt-8 px-4 min-h-full dark:bg-[#303030] bg-slate-100 p-2 flex flex-col">
 					{/* header */}
 					<div className="flex justify-center items-center">
 						<p className="w-[10%]">
@@ -219,6 +221,15 @@ const TodoPage = () => {
 							</form>
 						</p>
 					</div>
+
+					<p
+						className="text-start dark:text-[#adadad] mt-auto mb-2"
+						onClick={(e) => {
+							setSelectedTodoId(null);
+						}}
+					>
+						<ArrowRight className="w-[20px] h-[20px]" />
+					</p>
 				</div>
 			)}
 		</>
