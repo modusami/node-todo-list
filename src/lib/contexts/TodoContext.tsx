@@ -43,10 +43,12 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		setTodos((prevTodos) => (prevTodos ? [...prevTodos, newTodo] : [newTodo]));
 	};
 
-	const edit = (id: number, title: string) => {
+	const edit = (id: number, title: string, notes: string) => {
 		setTodos((prevTodos) => {
 			return prevTodos
-				? prevTodos.map((todo) => (todo.id === id ? { ...todo, title: title } : todo))
+				? prevTodos.map((todo) =>
+						todo.id === id ? { ...todo, title: title, notes: notes } : todo
+				  )
 				: null;
 		});
 	};

@@ -1,9 +1,10 @@
 "use client";
-import { ArrowDown, ArrowRight, ArrowRightCircleIcon } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowRightCircleIcon, Circle, Star } from "lucide-react";
 import Todo from "../ui/Todo";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoProps } from "@/lib/ui/props";
 import { useState, useMemo } from "react";
+import AutoResizeTextarea from "../pieces/AutoResizeTextArea";
 
 const TodoPage = () => {
 	const {
@@ -25,9 +26,16 @@ const TodoPage = () => {
 	const [title, setTitle] = useState<string>("");
 	const currentSelectedTodo = useMemo(() => {
 		return todos ? todos.find((todo: TodoProps) => todo.id === selectedTodoId) : null;
-	}, [selectedTodoId]);
+	}, [selectedTodoId, todos]);
 	const [showRegularTodos, setShowRegularTodos] = useState<boolean>(true);
 	const [showCompletedTodos, setShowCompletedTodos] = useState<boolean>(true);
+	const [editNotesMode, setEditNotesMode] = useState<boolean>(false);
+
+	const onChangeCurrentSelectedTodoNotes = (text: string) => {
+		if (currentSelectedTodo) {
+			edit(currentSelectedTodo.id, currentSelectedTodo.title, text);
+		}
+	};
 
 	return (
 		<>
@@ -153,8 +161,64 @@ const TodoPage = () => {
 				</div>
 			</div>
 			{currentSelectedTodo && (
-				<div className="w-[30%] min-h-full dark:bg-[#303030] bg-slate-100 p-2">
-					<h1 className="font-bold">{currentSelectedTodo.title}</h1>
+				<div className="w-[30%] pt-8 px-4 min-h-full dark:bg-[#303030] bg-slate-100 p-2">
+					{/* header */}
+					<div className="flex justify-center items-center">
+						<p className="w-[10%]">
+							<Circle
+								className={`w-[20px] h-[20px] cursor-pointer ${
+									currentSelectedTodo.isCompleted
+										? "fill-green-400 text-green-400 "
+										: "bg-inherit"
+								}`}
+								onClick={(e) => {
+									e.stopPropagation();
+									handleToggleComplete(currentSelectedTodo.id);
+								}}
+							/>
+						</p>
+						<div className="flex-1 flex items-center">
+							<h1 className="font-bold text-start">{currentSelectedTodo.title}</h1>
+						</div>
+
+						<p className=" flex justify-center items-center">
+							<Star
+								className={`w-[20px] h-[20px] cursor-pointer ${
+									currentSelectedTodo.isFavorite
+										? "fill-yellow-400 text-yellow-400"
+										: "bg-inherit"
+								}`}
+								onClick={(e) => {
+									e.stopPropagation();
+									handleToggleFavorite(currentSelectedTodo.id);
+								}}
+							/>
+						</p>
+					</div>
+					{/* border */}
+					<div className="h-[2px] my-5 dark:bg-[#7d7d7d]"></div>
+					{/* extra todo functionalities */}
+					<div
+						onClick={(e) => {
+							e.stopPropagation();
+							setEditNotesMode(!editNotesMode);
+						}}
+					>
+						<p>
+							<form
+								action="#"
+								onSubmit={(e) => {
+									e.preventDefault(); /* Handle form submission */
+								}}
+							>
+								<AutoResizeTextarea
+									value={currentSelectedTodo?.notes || ""}
+									onChange={onChangeCurrentSelectedTodoNotes}
+									className="border-none outline-none bg-inherit text-inherit"
+								/>
+							</form>
+						</p>
+					</div>
 				</div>
 			)}
 		</>
