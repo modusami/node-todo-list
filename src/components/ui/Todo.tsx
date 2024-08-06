@@ -44,7 +44,10 @@ const Todo: React.FC<TodoComponentProps> = ({
 						className={`w-[20px] h-[20px] cursor-pointer ${
 							isCompleted ? "fill-green-400 text-green-400 " : "bg-inherit"
 						}`}
-						onClick={() => toggleComplete(id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							toggleComplete(id);
+						}}
 					/>
 				</p>
 				<p

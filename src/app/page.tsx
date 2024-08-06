@@ -4,21 +4,20 @@ import Image from "next/image";
 
 export default function Home() {
 	return (
-		<main className="min-h-screen p-2 flex flex-col">
-			{/* nav bar / title */}
-			<nav className="mb-4 text-sm">
-				<h1>Todo List @React | @Node | @Postgres</h1>
-			</nav>
+		<main className="min-h-screen flex flex-col">
 			{/* todos */}
-			<TodoProvider>
-				<div className="flex-grow flex w-full md:w-[70%] mx-auto space-x-4">
-					<TodoPage />
-				</div>
-			</TodoProvider>
+			<section className="flex flex-grow ">
+				<TodoProvider>
+					<div className=" w-[20%]">odd</div>
+					<div className="flex-grow flex w-full mx-auto space-x-4">
+						<TodoPage />
+					</div>
+				</TodoProvider>
+			</section>
 
-			<footer className="mt-4 text-sm">
-				<p>Michael-Andre Odusami</p>
-			</footer>
+			{/* <footer className="text-sm text-center mt-5">
+				<p>Michael-Andre Odusami - Made with TS, Next.JS, React, Postgres, Node.JS</p>
+			</footer> */}
 		</main>
 	);
 }
