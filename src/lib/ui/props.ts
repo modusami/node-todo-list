@@ -12,3 +12,8 @@ export interface TodoComponentProps extends TodoProps {
 	deleteTodo: (id: number) => void;
 	edit: (id: number, title: string) => void;
 }
+
+export interface ContextMenuProps {
+	x: number;
+	y: number;
+}

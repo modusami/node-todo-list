@@ -8,7 +8,7 @@ export default function Home() {
 			{/* todos */}
 			<section className="flex flex-grow ">
 				<TodoProvider>
-					<div className=" w-[20%]">odd</div>
+					<div className=" w-[20%]"></div>
 					<div className="flex-grow flex w-full mx-auto space-x-4 pr-10">
 						<TodoPage />
 					</div>

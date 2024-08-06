@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
-import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
+import { ContextMenuProps, TodoComponentProps, TodoProps } from "@/lib/ui/props";
 import { Star, MoreVertical, CircleCheck } from "lucide-react";
 
 const TodoPopup = ({ onEdit, onDelete }: { onEdit: any; onDelete: any }) => {

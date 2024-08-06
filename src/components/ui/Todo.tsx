@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTodoContext } from "@/lib/contexts/TodoContext";
-import { TodoComponentProps, TodoProps } from "@/lib/ui/props";
+import { ContextMenuProps, TodoComponentProps, TodoProps } from "@/lib/ui/props";
 import { Star, Circle, MoreVertical, CheckIcon } from "lucide-react";
 import TodoPopup from "../pieces/TodoPopup";
 import { inter } from "@/lib/util/fonts";
@@ -20,6 +20,17 @@ const Todo: React.FC<TodoComponentProps> = ({
 	const { setSelectedTodoId, selectedTodoId } = useTodoContext();
 
 	const [showPopup, setShowPopup] = useState(false);
+	const [menuPosition, setMenuPosition] = useState<ContextMenuProps>({ x: 0, y: 0 });
+
+	const handleContextMenu = useCallback(
+		(event: React.MouseEvent) => {
+			event.preventDefault();
+			setSelectedTodoId(id);
+			setShowPopup(true);
+			setMenuPosition({ x: event.clientX, y: event.clientY });
+		},
+		[id, setSelectedTodoId]
+	);
 
 	const handleEdit = () => {
 		setShowPopup(false);
@@ -40,6 +51,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 					e.stopPropagation();
 					setSelectedTodoId(id);
 				}}
+				onContextMenu={handleContextMenu}
 			>
 				<p className="mr-3 flex items-center justify-center">
 					<Circle
@@ -72,17 +84,42 @@ const Todo: React.FC<TodoComponentProps> = ({
 						}}
 					/>
 				</p>
-				<div className="flex justify-center items-center">
-					<MoreVertical
-						className="cursor-pointer"
-						onClick={(e) => {
-							e.stopPropagation();
-							setShowPopup(!showPopup);
-						}}
-					/>
-				</div>
-				{showPopup && <TodoPopup onEdit={handleEdit} onDelete={handleDelete} />}
 			</div>
+			{showPopup && selectedTodoId === id && (
+				<>
+					<div
+						className="absolute p-2 text-[12px] w-fit h-fit z-10 bg-black"
+						style={{ top: menuPosition.y, left: menuPosition.x }}
+					>
+						<ul className="p-0 m-0 list-none flex flex-col space-y-2">
+							<li
+								className="cursor-pointer hover:bg-[#202020]"
+								onClick={(e) => {
+									toggleComplete(id);
+								}}
+							>
+								Mark as completed
+							</li>
+							<li
+								className="cursor-pointer hover:bg-[#202020]"
+								onClick={(e) => {
+									toggleFavorite(id);
+								}}
+							>
+								Mark as favorite
+							</li>
+							<li
+								className="cursor-pointer hover:bg-[#202020]"
+								onClick={(e) => {
+									handleDelete();
+								}}
+							>
+								Delete
+							</li>
+						</ul>
+					</div>
+				</>
+			)}
 		</>
 	);
 };
