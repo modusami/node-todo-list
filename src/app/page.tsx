@@ -4,12 +4,12 @@ import Image from "next/image";
 
 export default function Home() {
 	return (
-		<main className="min-h-screen flex flex-col">
+		<main className="min-h-screen flex flex-col text-sm">
 			{/* todos */}
 			<section className="flex flex-grow ">
 				<TodoProvider>
 					<div className=" w-[20%]"></div>
-					<div className="flex-grow flex w-full mx-auto space-x-4 pr-10">
+					<div className="flex-grow flex w-full mx-auto space-x-4 pr-10 py-2">
 						<TodoPage />
 					</div>
 				</TodoProvider>
