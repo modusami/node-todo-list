@@ -144,7 +144,7 @@ const TodoPage = () => {
 									value={title}
 									onChange={(e) => setTitle(e.target.value)}
 									className="w-full flex-1 bg-inherit focus:border-b-white text-inherit font-light focus:font-bold dark:placeholder:text-gray-300 p-3 m-0 outline-none  placeholder:font-light"
-									placeholder="Enter a new todo here..."
+									placeholder="Add task"
 								/>
 
 								<p className="w-[10%] flex justify-end pr-2 ">

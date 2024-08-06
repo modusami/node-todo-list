@@ -17,7 +17,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 	deleteTodo,
 	edit,
 }) => {
-	const { setSelectedTodoId } = useTodoContext();
+	const { setSelectedTodoId, selectedTodoId } = useTodoContext();
 
 	const [showPopup, setShowPopup] = useState(false);
 
@@ -33,7 +33,9 @@ const Todo: React.FC<TodoComponentProps> = ({
 	return (
 		<>
 			<div
-				className="relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-sm dark:bg-[#303030]"
+				className={`relative flex justify-center items-start p-2 border dark:border-gray-300 border-black-300 rounded-sm  ${
+					selectedTodoId === id ? "dark:bg-[#545454]" : "dark:bg-[#303030]"
+				}`}
 				onClick={(e) => {
 					e.stopPropagation();
 					setSelectedTodoId(id);
