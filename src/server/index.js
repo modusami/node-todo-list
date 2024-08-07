@@ -3,8 +3,13 @@ const express = require("express");
 const app = express();
 const todoRoutes = require("./routes/todoRoutes");
 const port = 8080;
+const cors = require("cors");
 
-const { pool } = require("./config/db.config");
+app.use(
+	cors({
+		origin: "http://localhost:3000",
+	})
+);
 
 app.use("/todos", todoRoutes);
 
