@@ -5,6 +5,7 @@ import { useTodoContext } from "@/lib/contexts/TodoContext";
 import { TodoProps } from "@/lib/ui/props";
 import { useState, useMemo } from "react";
 import AutoResizeTextarea from "../pieces/AutoResizeTextArea";
+import Loading from "./Loading";
 
 const TodoPage = () => {
 	const {
@@ -16,12 +17,15 @@ const TodoPage = () => {
 		edit,
 		selectedTodoId,
 		setSelectedTodoId,
+		isLoading,
 	} = useTodoContext();
 
-	const regularTodos = todos.filter((todo: TodoProps) => !todo.isCompleted);
-	const completedTodos = todos.filter(
-		(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
-	);
+	const regularTodos = todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : [];
+	const completedTodos = todos
+		? todos.filter(
+				(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
+		  )
+		: [];
 
 	const [title, setTitle] = useState<string>("");
 	const currentSelectedTodo = useMemo(() => {
@@ -36,6 +40,10 @@ const TodoPage = () => {
 			edit(currentSelectedTodo.id, currentSelectedTodo.title, text);
 		}
 	};
+
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<>
