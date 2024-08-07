@@ -18,7 +18,9 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 			console.log(err);
 			setTodos([]); // Set to empty array on error
 		} finally {
-			setIsLoading(false);
+			if (todos !== null) {
+				setIsLoading(false);
+			}
 		}
 	};
 
