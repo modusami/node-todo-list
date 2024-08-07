@@ -1,0 +1,46 @@
+CREATE TABLE IF NOT EXISTS
+    Todos (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(50) NOT NULL,
+        notes TEXT,
+        isCompleted BOOLEAN NOT NULL,
+        isFavorite BOOLEAN NOT NULL,
+        created_at TIMESTAMP NOT NULL,
+        updated_at TIMESTAMP NOT NULL
+    );
+
+-- Inserting sample data
+INSERT INTO
+    Todos (
+        title,
+        notes,
+        isCompleted,
+        isFavorite,
+        created_at,
+        updated_at
+    )
+VALUES
+    (
+        'Buy groceries',
+        'Milk, eggs, bread',
+        FALSE,
+        FALSE,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+    ),
+    (
+        'Finish report',
+        'Due by Friday',
+        FALSE,
+        TRUE,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+    ),
+    (
+        'Call mom',
+        'Ask about weekend plans',
+        FALSE,
+        FALSE,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+    );
