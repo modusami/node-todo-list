@@ -1,5 +1,6 @@
 const { pool } = require("../config/db.config");
 
+const now = new Date(new Date().toISOString());
 const todoRepository = {
 	findById: async (id) => {
 		const query = "SELECT * FROM todos WHERE id = $1";
@@ -11,27 +12,25 @@ const todoRepository = {
 		const result = await pool.query(query);
 		return result;
 	},
-	save: async (id, todo) => {
-		const now = new Date(new Date().toISOString());
-		const query = `
-        INSERT INTO todos (id, title, notes, iscompleted, isfavorite, created_at, updated_at)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        ON CONFLICT (id) DO UPDATE
-        SET title = EXCLUDED.title,
-            notes = EXCLUDED.notes,
-            iscompleted = EXCLUDED.iscompleted,
-            isfavorite = EXCLUDED.isfavorite,
-            updated_at = EXCLUDED.updated_at
-        RETURNING *;
-    	`;
+	create: async (todo) => {
+		const query = `INSERT INTO todos (title, notes, iscompleted, isfavorite, created_at, updated_at)
+					VALUES ($1, $2, FALSE, FALSE, $3, $4) 
+					RETURNING *;`;
+
+		const result = await pool.query(query, [todo.title, "", now, now]);
+		return result.rows[0];
+	},
+	update: async (todo) => {
+		const query = `UPDATE todos 
+					SET title=$1, notes=$2, iscompleted=$3, isfavorite=$4, updated_at=$5
+					WHERE id=$6 RETURNING *`;
 		const result = await pool.query(query, [
-			id,
 			todo.title,
 			todo.notes,
 			todo.iscompleted,
 			todo.isfavorite,
-			todo.created_at || now, // Use provided created_at or current time for new todos
-			now, // Always update the updated_at timestamp
+			now,
+			todo.id,
 		]);
 		return result.rows[0];
 	},

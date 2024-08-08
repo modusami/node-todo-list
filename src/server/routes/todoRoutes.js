@@ -30,24 +30,40 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.post("/save", async (req, res) => {
+router.post("/create", async (req, res) => {
 	try {
 		const todo = req.body;
-
-		console.log(req.params);
-		console.log(req.body);
-		console.log(todo);
-
-		if (!todo || !todo.id || !todo.title) {
-			return res.status(400).json({ message: "Invalid todo data" });
+		if (!todo.title) {
+			res.status(404).json({ message: "Title of todo must contain values." });
 		}
-
-		const result = await todoRepository.save(todo.id, todo);
+		const result = await todoRepository.create(todo);
 
 		if (result) {
 			res.json(result);
 		} else {
-			res.status(404).json({ message: "Failed to save todo" });
+			res.status(404).json({ message: "Error creating todo" });
+		}
+	} catch (err) {
+		console.error("Error saving todo:", err);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
+router.post("/update", async (req, res) => {
+	try {
+		const todo = req.body;
+		if (!todo.id) {
+			res.status(404).json({ message: "Todo has no ID" });
+		}
+		if (!todo.title) {
+			res.status(404).json({ message: "Title of todo must contain values." });
+		}
+		const result = await todoRepository.update(todo);
+
+		if (result) {
+			res.json(result);
+		} else {
+			res.status(404).json({ message: "Error creating todo" });
 		}
 	} catch (err) {
 		console.error("Error saving todo:", err);
