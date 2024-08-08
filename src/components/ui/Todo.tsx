@@ -10,8 +10,8 @@ const Todo: React.FC<TodoComponentProps> = ({
 	id,
 	title,
 	notes,
-	isCompleted,
-	isFavorite,
+	iscompleted,
+	isfavorite,
 	toggleFavorite,
 	toggleComplete,
 	deleteTodo,
@@ -56,7 +56,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 				<p className="mr-3 flex items-center justify-center">
 					<Circle
 						className={`w-[20px] h-[20px] cursor-pointer ${
-							isCompleted ? "fill-green-400 text-green-400 " : "bg-inherit"
+							iscompleted ? "fill-green-400 text-green-400 " : "bg-inherit"
 						}`}
 						onClick={(e) => {
 							e.stopPropagation();
@@ -66,7 +66,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 				</p>
 				<p
 					className={`text-sm flex-1 ${
-						isCompleted ? "line-through dark:text-[#959595]" : ""
+						iscompleted ? "line-through dark:text-[#959595]" : ""
 					}`}
 				>
 					{title}
@@ -76,7 +76,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 				<p className="ml-3 flex justify-center items-center">
 					<Star
 						className={`w-[20px] h-[20px] cursor-pointer ${
-							isFavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
+							isfavorite ? "fill-yellow-400 text-yellow-400" : "bg-inherit"
 						}`}
 						onClick={(e) => {
 							e.stopPropagation();

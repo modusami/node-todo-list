@@ -20,10 +20,10 @@ const TodoPage = () => {
 		isLoading,
 	} = useTodoContext();
 
-	const regularTodos = todos ? todos.filter((todo: TodoProps) => !todo.isCompleted) : [];
+	const regularTodos = todos ? todos.filter((todo: TodoProps) => !todo.iscompleted) : [];
 	const completedTodos = todos
 		? todos.filter(
-				(todo: TodoProps) => todo.isCompleted || (todo.isCompleted && todo.isFavorite)
+				(todo: TodoProps) => todo.iscompleted || (todo.iscompleted && todo.isfavorite)
 		  )
 		: [];
 
@@ -76,7 +76,7 @@ const TodoPage = () => {
 							{todos &&
 								showRegularTodos &&
 								todos
-									.filter((todo: TodoProps) => !todo.isCompleted)
+									.filter((todo: TodoProps) => !todo.iscompleted)
 									.map((todoObj: TodoProps) => (
 										<Todo
 											key={todoObj.id}
@@ -114,8 +114,8 @@ const TodoPage = () => {
 								todos
 									.filter(
 										(todo: TodoProps) =>
-											todo.isCompleted ||
-											(todo.isCompleted && todo.isFavorite)
+											todo.iscompleted ||
+											(todo.iscompleted && todo.isfavorite)
 									)
 									.map((todoObj: TodoProps) => (
 										<Todo
@@ -177,7 +177,7 @@ const TodoPage = () => {
 						<p className="w-[10%]">
 							<Circle
 								className={`w-[20px] h-[20px] cursor-pointer ${
-									currentSelectedTodo.isCompleted
+									currentSelectedTodo.iscompleted
 										? "fill-green-400 text-green-400 "
 										: "bg-inherit"
 								}`}
@@ -194,7 +194,7 @@ const TodoPage = () => {
 						<p className=" flex justify-center items-center">
 							<Star
 								className={`w-[20px] h-[20px] cursor-pointer ${
-									currentSelectedTodo.isFavorite
+									currentSelectedTodo.isfavorite
 										? "fill-yellow-400 text-yellow-400"
 										: "bg-inherit"
 								}`}

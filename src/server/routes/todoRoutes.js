@@ -30,4 +30,29 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.post("/save", async (req, res) => {
+	try {
+		const todo = req.body;
+
+		console.log(req.params);
+		console.log(req.body);
+		console.log(todo);
+
+		if (!todo || !todo.id || !todo.title) {
+			return res.status(400).json({ message: "Invalid todo data" });
+		}
+
+		const result = await todoRepository.save(todo.id, todo);
+
+		if (result) {
+			res.json(result);
+		} else {
+			res.status(404).json({ message: "Failed to save todo" });
+		}
+	} catch (err) {
+		console.error("Error saving todo:", err);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
 module.exports = router;

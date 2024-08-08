@@ -1,10 +1,12 @@
+DROP TABLE IF EXISTS todos;
+
 CREATE TABLE IF NOT EXISTS
-    Todos (
+    todos (
         id SERIAL PRIMARY KEY,
         title VARCHAR(50) NOT NULL,
         notes TEXT,
-        isCompleted BOOLEAN NOT NULL,
-        isFavorite BOOLEAN NOT NULL,
+        iscompleted BOOLEAN NOT NULL,
+        isfavorite BOOLEAN NOT NULL,
         created_at TIMESTAMP NOT NULL,
         updated_at TIMESTAMP NOT NULL
     );
@@ -14,8 +16,8 @@ INSERT INTO
     Todos (
         title,
         notes,
-        isCompleted,
-        isFavorite,
+        iscompleted,
+        isfavorite,
         created_at,
         updated_at
     )
