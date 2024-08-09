@@ -27,9 +27,19 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		fetchAllFromDB();
 	}, []);
 
-	const saveTodo = async (todo: TodoProps | Object) => {
+	const updateTodo = async (todo: TodoProps | Object) => {
 		try {
-			const response = await db.post("/todos/save", todo);
+			const response = await db.post("/todos/update", todo);
+			return response.data;
+		} catch (err) {
+			console.error("Error saving todo:", err);
+			return null;
+		}
+	};
+
+	const createTodo = async (todo: TodoProps | Object) => {
+		try {
+			const response = await db.post("/todos/update", todo);
 			return response.data;
 		} catch (err) {
 			console.error("Error saving todo:", err);
@@ -41,10 +51,8 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		const newTodo = {
 			title: title,
 			notes: "",
-			iscompleted: false,
-			isfavorite: false,
 		};
-		const savedTodo = await saveTodo(newTodo);
+		const savedTodo = await createTodo(newTodo);
 		if (savedTodo) {
 			setTodos((prevTodos) => (prevTodos ? [...prevTodos, savedTodo] : [savedTodo]));
 		}
@@ -54,7 +62,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		const todoToUpdate = todos?.find((todo) => todo.id === id);
 		if (todoToUpdate) {
 			const updatedTodo = { ...todoToUpdate, title, notes };
-			const savedTodo = await saveTodo(updatedTodo);
+			const savedTodo = await updateTodo(updatedTodo);
 			if (savedTodo) {
 				setTodos((prevTodos) => {
 					return prevTodos
@@ -78,7 +86,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		const todoToUpdate = todos?.find((todo) => todo.id === id);
 		if (todoToUpdate) {
 			const updatedTodo = { ...todoToUpdate, isfavorite: !todoToUpdate.isfavorite };
-			const savedTodo = await saveTodo(updatedTodo);
+			const savedTodo = await updateTodo(updatedTodo);
 			if (savedTodo) {
 				setTodos((prevTodos) => {
 					return prevTodos
@@ -94,7 +102,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 		console.log(todoToUpdate);
 		if (todoToUpdate) {
 			const updatedTodo = { ...todoToUpdate, iscompleted: !todoToUpdate.iscompleted };
-			const savedTodo = await saveTodo(updatedTodo);
+			const savedTodo = await updateTodo(updatedTodo);
 			if (savedTodo) {
 				setTodos((prevTodos) => {
 					return prevTodos

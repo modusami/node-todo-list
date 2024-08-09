@@ -214,7 +214,7 @@ const TodoPage = () => {
 							setEditNotesMode(!editNotesMode);
 						}}
 					>
-						<p>
+						<div>
 							<form
 								action="#"
 								onSubmit={(e) => {
@@ -227,7 +227,7 @@ const TodoPage = () => {
 									className="border-none outline-none bg-inherit text-inherit"
 								/>
 							</form>
-						</p>
+						</div>
 					</div>
 
 					<p
