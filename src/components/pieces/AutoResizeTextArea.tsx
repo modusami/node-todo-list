@@ -34,6 +34,7 @@ const AutoResizeTextarea: React.FC<AutoResizeTextareaProps> = ({
 			ref={textareaRef}
 			value={value}
 			onChange={handleChange}
+			placeholder="Add notes here..."
 			className={`w-full resize-none overflow-hidden min-h-[20px] ${className}`}
 			rows={1}
 		/>
