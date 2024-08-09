@@ -34,6 +34,13 @@ const todoRepository = {
 		]);
 		return result.rows[0];
 	},
+	delete: async (id) => {
+		const query = `DELETE FROM todos 
+						WHERE id=$1 
+						RETURNING *`;
+		const result = await pool.query(query, [id]);
+		return result;
+	},
 };
 
 module.exports = {

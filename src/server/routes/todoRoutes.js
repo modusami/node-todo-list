@@ -49,7 +49,7 @@ router.post("/create", async (req, res) => {
 	}
 });
 
-router.post("/update", async (req, res) => {
+router.put("/update", async (req, res) => {
 	try {
 		const todo = req.body;
 		if (!todo.id) {
@@ -68,6 +68,27 @@ router.post("/update", async (req, res) => {
 	} catch (err) {
 		console.error("Error saving todo:", err);
 		res.status(500).json({ message: "Server error" });
+	}
+});
+
+router.delete("/delete/:id", async (req, res) => {
+	console.log(req.body);
+	try {
+		const id = req.params.id;
+		if (id) {
+			const result = await todoRepository.delete(id);
+			console.log(result);
+			if (result.rowCount > 0) {
+				res.json({ message: "Todo deleted successfully" });
+			} else {
+				res.status(404).json({ message: "Todo not found" });
+			}
+		} else {
+			res.status(400).json({ message: "Todo ID is required" });
+		}
+	} catch (err) {
+		console.error("Error deleting todo:", err);
+		res.status(500).json({ message: "Server error | Error Deleting Todo" });
 	}
 });
 
