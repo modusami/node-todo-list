@@ -98,7 +98,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 									toggleComplete(id);
 								}}
 							>
-								Mark as completed
+								{!iscompleted ? "Mark as Completed" : "Mark as Uncompleted"}
 							</li>
 							<li
 								className="cursor-pointer hover:bg-[#202020]"
@@ -106,7 +106,7 @@ const Todo: React.FC<TodoComponentProps> = ({
 									toggleFavorite(id);
 								}}
 							>
-								Mark as favorite
+								{!isfavorite ? "Mark as Favorite" : "Mark as Unfavorite"}
 							</li>
 							<li
 								className="cursor-pointer hover:bg-[#202020]"
